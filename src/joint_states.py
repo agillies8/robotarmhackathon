@@ -17,7 +17,7 @@ def joint_states_callback(msg):
     js.header = Header()
     js.header.stamp = rospy.Time.now()
     js.name = ['axis_1_child', 'arm1', 'arm2', 'endeffector1']
-    js.position = [msg.pose.position.x, msg.pose.position.y, msg.pose.position.z, -1*msg.pose.position.z - 1.5707]
+    js.position = [msg.pose.position.x, msg.pose.position.y, msg.pose.position.y +msg.pose.position.z, -1*msg.pose.position.z]
     js.velocity = []
     js.effort = []
     pub.publish(js)
