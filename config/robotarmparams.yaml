@@ -1,0 +1,7 @@
+#hardware parameters for robot arm hackathon
+
+LINK_1_LENGTH : 0.12
+LINK_2_LENGTH :  0.12
+LINK_3_LENGTH : 0.055
+LINK_3_Z_OFFSET: 0.015
+J2_BASE_Z_OFFSET: 0.12

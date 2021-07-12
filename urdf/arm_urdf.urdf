@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="robotarmhackathon">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.10420674769568 0.00214038854680129 0.0489094117884757"
+        rpy="0 0 0" />
+      <mass
+        value="10467613.2406238" />
+      <inertia
+        ixx="13107519632.3634"
+        ixy="-55188521.1955575"
+        ixz="-1605823.10235128"
+        iyy="23918500476.9016"
+        iyz="109816.326054326"
+        izz="10845868482.5405" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_link.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_link.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="base_leg_1">
+    <inertial>
+      <origin
+        xyz="0.0999315149733181 -0.0857872417456713 -0.0441134507472189"
+        rpy="0 0 0" />
+      <mass
+        value="14024454.6532922" />
+      <inertia
+        ixx="2322712012.02237"
+        ixy="-6153470.93379884"
+        ixz="-9980267.40975024"
+        iyy="3164204483.44981"
+        iyz="-932011049.07348"
+        izz="2260407763.54338" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_leg_1"
+    type="fixed">
+    <origin
+      xyz="0.0000331750659552412 0.000035150719337271 0.0676999969482422"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_leg_1" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="base_leg_2">
+    <inertial>
+      <origin
+        xyz="0.0999315149733181 -0.0857872417456714 -0.0441134507472189"
+        rpy="0 0 0" />
+      <mass
+        value="14024454.6532921" />
+      <inertia
+        ixx="2322712012.02236"
+        ixy="-6153470.93379897"
+        ixz="-9980267.40975122"
+        iyy="3164204483.4498"
+        iyz="-932011049.073476"
+        izz="2260407763.54337" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_2.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_2.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_leg_2"
+    type="fixed">
+    <origin
+      xyz="0.220986813987056 -0.149227297525002 -0.0227000007629394"
+      rpy="3.14159265358979 0 1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_leg_2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="base_leg_3">
+    <inertial>
+      <origin
+        xyz="0.0999315149733181 -0.0857872417456713 -0.0441134507472189"
+        rpy="0 0 0" />
+      <mass
+        value="14024454.6532921" />
+      <inertia
+        ixx="2322712012.02237"
+        ixy="-6153470.93379867"
+        ixz="-9980267.40975017"
+        iyy="3164204483.44981"
+        iyz="-932011049.073479"
+        izz="2260407763.54338" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_3.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/base_leg_3.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_leg_3"
+    type="fixed">
+    <origin
+      xyz="0.200053083215943 -0.0982058725159484 0.0676999969482422"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_leg_3" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="axis_1_base">
+    <inertial>
+      <origin
+        xyz="0.0959375121939249 -0.380630664102495 -0.0218762551208198"
+        rpy="0 0 0" />
+      <mass
+        value="40932281.1699308" />
+      <inertia
+        ixx="14369922660.4427"
+        ixy="-2077351721.99651"
+        ixz="-399238146.758099"
+        iyy="20887549884.6441"
+        iyz="234293608.920345"
+        izz="33961580084.1404" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/axis_1_base.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/axis_1_base.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="axis_1_base"
+    type="fixed">
+    <origin
+      xyz="-0.0036672 0.33004 0.0677"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="axis_1_base" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="axis_1_child">
+    <inertial>
+      <origin
+        xyz="-0.0057045784518418 -0.000847850206558562 0.0254069730097391"
+        rpy="0 0 0" />
+      <mass
+        value="42138053.5896542" />
+      <inertia
+        ixx="44674977820.4956"
+        ixy="-1139948725.46951"
+        ixz="3663987083.6928"
+        iyy="36428923022.2857"
+        iyz="2198460579.50893"
+        izz="27528388109.4216" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/axis_1_child.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/axis_1_child.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="axis_1_child"
+    type="continuous">
+    <origin
+      xyz="0.099999 -0.37922 -0.00005"
+      rpy="0 0 0" />
+    <parent
+      link="axis_1_base" />
+    <child
+      link="axis_1_child" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="arm1">
+    <inertial>
+      <origin
+        xyz="-0.0374809094503138 0.000801315982716993 0.0345576406838505"
+        rpy="0 0 0" />
+      <mass
+        value="33427957.8252588" />
+      <inertia
+        ixx="28352419324.3511"
+        ixy="701152712.603097"
+        ixz="27013648567.803"
+        iyy="56973636333.2576"
+        iyz="-645733310.894033"
+        izz="32876966176.0036" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/arm1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/arm1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm1"
+    type="continuous">
+    <origin
+      xyz="0.000033422 0 0.061071"
+      rpy="0 0.82644 3.1416" />
+    <parent
+      link="axis_1_child" />
+    <child
+      link="arm1" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="arm2">
+    <inertial>
+      <origin
+        xyz="0.0663717579477605 -0.0056523979593916 0.0330767881043029"
+        rpy="0 0 0" />
+      <mass
+        value="36928888.8607213" />
+      <inertia
+        ixx="14362604458.5882"
+        ixy="-1227795195.20732"
+        ixz="-21476693883.7102"
+        iyy="57955982621.5579"
+        iyz="23540789.3879213"
+        izz="48768974871.0532" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/arm2.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/arm2.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm2"
+    type="continuous">
+    <origin
+      xyz="-0.088064 0 0.081116"
+      rpy="0 1.2805 3.1416" />
+    <parent
+      link="arm1" />
+    <child
+      link="arm2" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="endeffector1">
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="12888695.7038069" />
+      <inertia
+        ixx="2882385634.16868"
+        ixy="-232380366.832862"
+        ixz="253811824.524402"
+        iyy="1817042019.06422"
+        iyz="553056013.483461"
+        izz="3244707577.17995" />
+    </inertial>
+    <!-- 0.086484 0.045917 -0.17624 -->
+    <visual>
+      <origin
+        xyz="-0.1151000484 0.04 -0.19624"   
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/endeffector1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/endeffector1.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="endeffector1"
+    type="continuous">
+    <origin
+      xyz="0.106105 0 0.05327624"
+      rpy="0 -0.45405 0" />
+    <parent
+      link="arm2" />
+    <child
+      link="endeffector1" />
+    <axis
+      xyz="0 1 0" />
+
+  </joint>
+  <link
+    name="endeffector2">
+    <inertial>
+      <origin
+        xyz="-0.00000395911319455422 0.00323692438356659 0.00485981240420523"
+        rpy="0 0 0" />
+      <mass
+        value="22357667.7030269" />
+      <inertia
+        ixx="7153844560.42696"
+        ixy="3276759.70488864"
+        ixz="462212.01745629"
+        iyy="5769081326.00476"
+        iyz="-277445932.301696"
+        izz="12310122424.0219" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.1  -0.05 0.19624"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/endeffector2.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotarmhackathon/meshes/endeffector2.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="endeffector2"
+    type="fixed">
+    <origin
+      xyz="0.1 0.08 0.205348281860352"
+      rpy="3.14159265358979 0 1.5707963267949" />
+    <parent
+      link="endeffector1" />
+    <child
+      link="endeffector2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
