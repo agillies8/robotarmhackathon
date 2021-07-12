@@ -2,7 +2,6 @@
 #publishes a message with the joint positions given x,y,z positions.
 #follows ROS right hand rule conventions
 import math
-
 import numpy as np
 import rospy
 from geometry_msgs.msg import PoseStamped
@@ -79,10 +78,14 @@ class IK_Solver():
                 self.elbow = points[1]
         else:
             self.valid = False
+        #rospy.loginfo(f'elbow_x: {self.elbow[0]-self.j2_center[0]} elbow_y: {self.elbow[1]-self.j2_center[1]}')
 
-        j2_output = np.arcsin(self.elbow[0]/self.link_1)
-        j3_output = np.arccos((radial_distance-self.link_3-self.elbow[0])/self.link_2)
-        rospy.loginfo(j3_output)
+        if self.elbow[1]-self.j2_center[1] > 0:
+            j2_output = -1*math.asin(self.elbow[0]/self.link_1)
+        else:
+            j2_output = 3.1415 + math.asin(self.elbow[0]/self.link_1)
+        j3_output = math.acos((radial_distance-self.link_3-self.elbow[0])/self.link_2) - j2_output
+        
         joints_pose = PoseStamped()
         joints_pose.header = msg.header
         joints_pose.pose.position.x = j1_output
@@ -92,7 +95,7 @@ class IK_Solver():
         
         
 def main():
-    rospy.init_node('Switch_multiplex')
+    rospy.init_node('ik_solver')
    
     ik_solver = IK_Solver()
 

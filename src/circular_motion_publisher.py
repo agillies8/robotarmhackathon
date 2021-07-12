@@ -13,7 +13,7 @@ def circular_motion():
     rospy.init_node('Hello_world')
     pub=rospy.Publisher('command_pose', PoseStamped, queue_size=1)
     pose_command = PoseStamped()
-    circle_center = [0,0.2]
+    circle_center = [0.2,0]
     circle_radius = 0.05    
     pose_command.header.frame_id='world'
 
@@ -23,6 +23,7 @@ def circular_motion():
 
         now = rospy.get_time()
         pose_command.header.stamp=rospy.Time.now()
+        pose_command.header.frame_id = 'world'
         pose_command.pose.position.x = circle_center[0]+circle_radius*math.sin(now)
         pose_command.pose.position.y = circle_center[1]+circle_radius*math.cos(now)
         pose_command.pose.position.z = 0
