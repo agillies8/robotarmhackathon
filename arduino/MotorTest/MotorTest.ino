@@ -37,7 +37,7 @@ SpeedyStepper axis3;
 void setup() {
 
   //enable axis
- pinMode(EnaPin1, OUTPUT);
+pinMode(EnaPin1, OUTPUT);
 pinMode(EnaPin2, OUTPUT);
 pinMode(EnaPin3, OUTPUT);
 

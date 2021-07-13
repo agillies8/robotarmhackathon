@@ -26,13 +26,16 @@
     <param name="port" value="/dev/ttyACM0"/>
      </node> -->
 
-    <node pkg="robotarmhackathon" type="circular_motion_publisher.py" name="circular_publisher" output="screen">
+    <node pkg="robotarmhackathon" type="path_publisher.py" name="circular_publisher" output="screen">
     </node>
 
     <node pkg="robotarmhackathon" type="ik.py" name="ik_solver" output="screen">
     </node>
 
     <node pkg="robotarmhackathon" type="joint_states.py" name="joint_states" output="screen">
+    </node>
+
+    <node pkg="robotarmhackathon" type="motor_commander.py" name="motor_commander" output="screen">
     </node>
 
 

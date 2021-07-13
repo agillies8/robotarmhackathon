@@ -2,23 +2,25 @@
 #include <geometry_msgs/Pose.h>
 #include <AccelStepper.h>
 
+// Connections to driver mks1.4
+#define dirPin1  A1  // Direction for axis 1
+#define stepPin1  A0// Step for axis 1
+#define EnaPin1  38// Step for axis 1
+#define dirPin2  A7  // Direction for axis 2
+#define stepPin2  A6 // Step for axis 2
+#define EnaPin2  A2// Step for axis 1
+#define dirPin3  48  // Direction for axis 3
+#define stepPin3  46 // Step for axis 3
+#define EnaPin3  A8// Step for axis 1
+#define LIMIT_SWITCH_PIN1  9
+#define LIMIT_SWITCH_PIN2  10
+#define LIMIT_SWITCH_PIN3  11
+#define LED_PIN 13
 ros::NodeHandle node_handle;
 geometry_msgs::Pose move_axis_relative;
 geometry_msgs::Pose joints;
 
 ros::Publisher arduino_joint_publisher("arduino_joint_publisher", &joints);
-
-// Connections to driver
-#define dirPin1  5  // Direction for axis 1
-#define stepPin1  2// Step for axis 1
-#define dirPin2  6  // Direction for axis 2
-#define stepPin2  3 // Step for axis 2
-#define dirPin3  7  // Direction for axis 3
-#define stepPin3  4 // Step for axis 3
-#define LED_PIN  13
-#define LIMIT_SWITCH_PIN1  9
-#define LIMIT_SWITCH_PIN2  10
-#define LIMIT_SWITCH_PIN3  11
 
 int axis_1_cmd = 0;
 int axis_2_cmd = 0;

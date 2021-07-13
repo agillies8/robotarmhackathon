@@ -10,7 +10,7 @@ from geometry_msgs.msg import PoseStamped
 from std_msgs.msg import Int16, String
 
 def circular_motion():
-    rospy.init_node('Hello_world')
+    rospy.init_node('circular_motion')
     pub=rospy.Publisher('command_pose', PoseStamped, queue_size=1)
     pose_command = PoseStamped()
     circle_center = [0.2,0]
