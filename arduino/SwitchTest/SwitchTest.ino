@@ -1,6 +1,6 @@
-#define SWITCH1 9
-#define SWITCH2 10
-#define SWITCH3 11
+#define SWITCH1 3
+#define SWITCH2 14
+#define SWITCH3 18
 
 void setup()
 {

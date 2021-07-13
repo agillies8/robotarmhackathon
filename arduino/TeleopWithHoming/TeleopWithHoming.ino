@@ -2,23 +2,26 @@
 #include <geometry_msgs/Pose.h>
 #include <AccelStepper.h>
 
+// Connections to driver mks1.4
+#define dirPin1  A1  // Direction for axis 1
+#define stepPin1  A0// Step for axis 1
+#define EnaPin1  38// Step for axis 1
+#define dirPin2  A7  // Direction for axis 2
+#define stepPin2  A6 // Step for axis 2
+#define EnaPin2  A2// Step for axis 1
+#define dirPin3  48  // Direction for axis 3
+#define stepPin3  46 // Step for axis 3
+#define EnaPin3  A8// Step for axis 1
+#define LIMIT_SWITCH_PIN1  9
+#define LIMIT_SWITCH_PIN2  10
+#define LIMIT_SWITCH_PIN3  11
+
 ros::NodeHandle node_handle;
 geometry_msgs::Pose joints;
 geometry_msgs::Pose bump_axis;
 
 ros::Publisher arduino_joint_publisher("arduino_joint_publisher", &joints);
 
-// Connections to driver
-#define dirPin1  5  // Direction for axis 1
-#define stepPin1  2// Step for axis 1
-#define dirPin2  6  // Direction for axis 2
-#define stepPin2  3 // Step for axis 2
-#define dirPin3  7  // Direction for axis 3
-#define stepPin3  4 // Step for axis 3
-#define LED_PIN  13
-#define LIMIT_SWITCH_PIN1  9
-#define LIMIT_SWITCH_PIN2  10
-#define LIMIT_SWITCH_PIN3  11
 
 int axis_1_dir = 0;
 int axis_2_dir = 0;
@@ -32,7 +35,6 @@ AccelStepper axis1(1, stepPin1, dirPin1);
 AccelStepper axis2(1, stepPin2, dirPin2);
 AccelStepper axis3(1, stepPin3, dirPin3);
 
-
 void bump_axis_callback(const geometry_msgs::Pose& bump_axis) {
   //can be -1, 0 or 1 (CW, stop, CCW)
   axis_1_dir = int(bump_axis.position.x);
@@ -40,9 +42,9 @@ void bump_axis_callback(const geometry_msgs::Pose& bump_axis) {
   axis_3_dir = int(bump_axis.position.z);
   begin_homing = bool(bump_axis.orientation.w);
 
-  axis1.move(axis_1_dir*1000);
-  axis2.move(axis_2_dir*1000);
-  axis3.move(axis_3_dir*1000);
+  axis1.move(axis_1_dir*50);
+  axis2.move(axis_2_dir*50);
+  axis3.move(axis_3_dir*50);
   begin_bump = true;
   
   if( (axis_1_dir==0) && (axis_2_dir==0) && (axis_3_dir==0)){
@@ -54,11 +56,19 @@ ros::Subscriber<geometry_msgs::Pose> arduino_sub2("bump_axis", &bump_axis_callba
 
 void setup() {
 
+  //enable axis
+pinMode(EnaPin1, OUTPUT);
+pinMode(EnaPin2, OUTPUT);
+pinMode(EnaPin3, OUTPUT);
+
+digitalWrite(EnaPin1, 0);
+digitalWrite(EnaPin2, 0);
+digitalWrite(EnaPin3, 0);
+
   node_handle.initNode();
   node_handle.advertise(arduino_joint_publisher);
   node_handle.subscribe(arduino_sub2);
 
-  pinMode(LED_PIN, OUTPUT);
   pinMode(LIMIT_SWITCH_PIN1, INPUT_PULLUP);
   pinMode(LIMIT_SWITCH_PIN2, INPUT_PULLUP);
   pinMode(LIMIT_SWITCH_PIN3, INPUT_PULLUP);

@@ -1,14 +1,6 @@
 #include <SpeedyStepper.h> //https://github.com/Stan-Reifel/SpeedyStepper/blob/master/Documentation.pdf
 //#include #include <AccelStepper.h>
 
-//ramps and uno
-//const int dirPin1 = 5;  // Direction for axis 1
-//const int stepPin1 = 2;// Step for axis 1
-//const int dirPin2 = 6;  // Direction for axis 2
-//const int stepPin2 = 3; // Step for axis 2
-//const int dirPin3 = 7;  // Direction for axis 3
-//const int stepPin3 = 4; // Step for axis 3
-
 // Connections to driver mks1.4
 #define dirPin1  A1  // Direction for axis 1
 #define stepPin1  A0// Step for axis 1
@@ -41,9 +33,9 @@ pinMode(EnaPin1, OUTPUT);
 pinMode(EnaPin2, OUTPUT);
 pinMode(EnaPin3, OUTPUT);
 
-digitalWrite(EnaPin1, 1);
-digitalWrite(EnaPin1, 1);
-digitalWrite(EnaPin1, 1);
+digitalWrite(EnaPin1, 0);
+digitalWrite(EnaPin2, 0);
+digitalWrite(EnaPin3, 0);
   
   // Setup the steppers with speedy stepper lib
   axis1.connectToPins(stepPin1, dirPin1);
@@ -53,7 +45,7 @@ digitalWrite(EnaPin1, 1);
 //  // set the speed and acceleration rates for the stepper motor
   axis1.setStepsPerRevolution(3200);
   axis1.setSpeedInRevolutionsPerSecond(0.5);
-  axis1.setAccelerationInRevolutionsPerSecondPerSecond(0.59);
+  axis1.setAccelerationInRevolutionsPerSecondPerSecond(0.5);
   
   axis2.setStepsPerRevolution(3200);
   axis2.setSpeedInRevolutionsPerSecond(0.5);
@@ -79,9 +71,9 @@ digitalWrite(EnaPin1, 1);
 }
 void loop() {
 
-  axis1.setupRelativeMoveInRevolutions(0.3);
-  axis2.setupRelativeMoveInRevolutions(0.3);
-  axis3.setupRelativeMoveInRevolutions(0.3);
+  axis1.setupRelativeMoveInRevolutions(0.1);
+  axis2.setupRelativeMoveInRevolutions(0.1);
+  axis3.setupRelativeMoveInRevolutions(0.1);
 
   while((!axis1.motionComplete()) || (!axis2.motionComplete()) || (!axis2.motionComplete()))
     {
@@ -90,8 +82,8 @@ void loop() {
       axis3.processMovement();
 
     float joint1 = axis1.getCurrentPositionInRevolutions();
-    float joint2 = axis1.getCurrentPositionInRevolutions();
-    float joint3 = axis1.getCurrentPositionInRevolutions();
+    float joint2 = axis2.getCurrentPositionInRevolutions();
+    float joint3 = axis3.getCurrentPositionInRevolutions();
 
 //    Serial.print("Axis 1: ");
 //    Serial.print(joint1);
@@ -110,19 +102,19 @@ void loop() {
 
 
 
-  axis1.setupRelativeMoveInRevolutions(-0.3);
-  axis2.setupRelativeMoveInRevolutions(-0.3);
-  axis3.setupRelativeMoveInRevolutions(-0.3);
+  axis1.setupRelativeMoveInRevolutions(-0.1);
+  axis2.setupRelativeMoveInRevolutions(-0.1);
+  axis3.setupRelativeMoveInRevolutions(-0.1);
 
-  while((!axis1.motionComplete()) || (!axis2.motionComplete()) || (!axis2.motionComplete()))
+  while((!axis1.motionComplete()) || (!axis2.motionComplete()) || (!axis3.motionComplete()))
     {
       axis1.processMovement();
       axis2.processMovement();
       axis3.processMovement();
 
     float joint1 = axis1.getCurrentPositionInRevolutions();
-    float joint2 = axis1.getCurrentPositionInRevolutions();
-    float joint3 = axis1.getCurrentPositionInRevolutions();
+    float joint2 = axis2.getCurrentPositionInRevolutions();
+    float joint3 = axis3.getCurrentPositionInRevolutions();
 
 //    Serial.print("Axis 1: ");
 //    Serial.print(joint1);
