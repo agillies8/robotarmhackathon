@@ -83,8 +83,14 @@ class IK_Solver():
         if self.elbow[1]-self.j2_center[1] > 0:
             j2_output = -1*math.asin(self.elbow[0]/self.link_1)
         else:
-            j2_output = 3.1415 + math.asin(self.elbow[0]/self.link_1)
-        j3_output = math.acos((radial_distance-self.link_3-self.elbow[0])/self.link_2) #- j2_output
+            j2_output = -3.1415 + math.asin(self.elbow[0]/self.link_1)
+
+        cos_input = (radial_distance-self.link_3-self.elbow[0])/self.link_2
+        if cos_input >1:
+            cos_input = 1
+        elif cos_input <-1:
+            cos_input = -1
+        j3_output = math.acos(cos_input) #- j2_output
         joints_pose = PoseStamped()
         joints_pose.header = msg.header
         joints_pose.pose.position.x = j1_output

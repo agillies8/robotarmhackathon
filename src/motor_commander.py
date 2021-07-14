@@ -6,7 +6,10 @@ from select import select
 import rospy
 from geometry_msgs.msg import Pose, PoseStamped
 
-RAD_TO_STEP = 1018
+AXIS_1_COUNTS_PER_REV = rospy.get_param("AXIS_1_COUNTS_PER_REV")
+AXIS_2_COUNTS_PER_REV = rospy.get_param("AXIS_2_COUNTS_PER_REV")
+AXIS_3_COUNTS_PER_REV = rospy.get_param("AXIS_3_COUNTS_PER_REV")
+RAD_TO_REV = 1/(2*3.1415)
 
 class Commander():
     def __init__(self):
@@ -17,9 +20,9 @@ class Commander():
 
     def joints_callback(self, msg):
       command = Pose()
-      command.position.x = int(msg.pose.position.x * RAD_TO_STEP)
-      command.position.y = int(msg.pose.position.y * RAD_TO_STEP)
-      command.position.z = int(msg.pose.position.z * RAD_TO_STEP)
+      command.position.x = int(msg.pose.position.x * AXIS_1_COUNTS_PER_REV * RAD_TO_REV)
+      command.position.y = int(msg.pose.position.y * AXIS_2_COUNTS_PER_REV * RAD_TO_REV)
+      command.position.z = int(msg.pose.position.z * AXIS_3_COUNTS_PER_REV * RAD_TO_REV)
       self.pub.publish(command)
 
     def start(self):

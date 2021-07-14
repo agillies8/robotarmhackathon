@@ -12,9 +12,10 @@
 #define dirPin3  48  // Direction for axis 3
 #define stepPin3  46 // Step for axis 3
 #define EnaPin3  A8// Step for axis 1
-#define LIMIT_SWITCH_PIN1  9
-#define LIMIT_SWITCH_PIN2  10
-#define LIMIT_SWITCH_PIN3  11
+
+#define LIMIT_SWITCH_PIN1  3
+#define LIMIT_SWITCH_PIN2  14
+#define LIMIT_SWITCH_PIN3  18
 
 ros::NodeHandle node_handle;
 geometry_msgs::Pose joints;
@@ -110,35 +111,38 @@ void loop() {
     if (begin_homing){
         begin_homing = false;
 
-          while (digitalRead(LIMIT_SWITCH_PIN1)) {  // Make the Stepper move CCW until the switch is activated   
-              axis1.moveTo(100000);  // Set the position to move to
+          while (digitalRead(LIMIT_SWITCH_PIN1)==0) {  // Make the Stepper move CCW until the switch is activated   
+              axis1.moveTo(-100000);  // Set the position to move to
               axis1.run();  // Start moving the stepper
               delay(5);
               node_handle.spinOnce();
           }
           axis1.setCurrentPosition(0);
-          axis1.runToNewPosition(-3600);
+          axis1.runToNewPosition(900);
           axis1.setCurrentPosition(0);
-
-          while (digitalRead(LIMIT_SWITCH_PIN2)) {  // Make the Stepper move CCW until the switch is activated   
-              axis2.moveTo(-100000);  // Set the position to move to
-              axis2.run();  // Start moving the stepper
-              delay(5);
-              node_handle.spinOnce();
-          }
-          axis2.setCurrentPosition(0);
-          axis2.runToNewPosition(2300);
-          axis2.setCurrentPosition(0);
-
-          while (digitalRead(LIMIT_SWITCH_PIN3)) {  // Make the Stepper move CCW until the switch is activated   
-              axis3.moveTo(100000);  // Set the position to move to
+          
+          while (digitalRead(LIMIT_SWITCH_PIN3)==0) {  // Make the Stepper move CCW until the switch is activated   
+              axis3.moveTo(-100000);  // Set the position to move to
               axis3.run();  // Start moving the stepper
               delay(5);
               node_handle.spinOnce();
           }
           axis3.setCurrentPosition(0);  
-          axis3.runToNewPosition(-800);
+        
+          
+          while (digitalRead(LIMIT_SWITCH_PIN2)==0) {  // Make the Stepper move CCW until the switch is activated   
+              axis2.moveTo(100000);  // Set the position to move to
+              axis2.run();  // Start moving the stepper
+              delay(5);
+              node_handle.spinOnce();
+          }
+          axis2.setCurrentPosition(0);
+          axis2.runToNewPosition(-480);
+          axis2.setCurrentPosition(0);
+          
+          axis3.runToNewPosition(260);
           axis3.setCurrentPosition(0);
+
     }
     
   joints.position.x=axis1.currentPosition();

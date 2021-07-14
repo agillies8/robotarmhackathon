@@ -26,7 +26,7 @@ def circular_motion():
         pose_command.header.frame_id = 'world'
         pose_command.pose.position.x = circle_center[0]+circle_radius*math.sin(now)
         pose_command.pose.position.y = circle_center[1]+circle_radius*math.cos(now)
-        pose_command.pose.position.z = 0.2
+        pose_command.pose.position.z = 0.15
 
 
         pub.publish(pose_command)  

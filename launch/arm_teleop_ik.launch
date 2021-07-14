@@ -1,16 +1,14 @@
 <launch>
 
+
+
+
     <rosparam command="load" file="$(find robotarmhackathon)/config/robotarmparams.yaml" />
       <arg
     name="model" />
   <param
     name="robot_description"
     textfile="$(find robotarmhackathon)/urdf/arm_urdf.urdf" />
-
-  <!-- <node
-    name="joint_state_publisher_gui"
-    pkg="joint_state_publisher_gui"
-    type="joint_state_publisher_gui" /> -->
 
   <node
     name="robot_state_publisher"
@@ -26,7 +24,7 @@
     <param name="port" value="/dev/ttyUSB0"/>
      </node>
 
-    <node pkg="robotarmhackathon" type="circular_motion_publisher.py" name="circular_publisher" output="screen">
+    <node pkg="robotarmhackathon" type="armTeleopIK.py" name="Arm_teleop_IK" output="screen">
     </node>
 
     <node pkg="robotarmhackathon" type="ik.py" name="ik_solver" output="screen">
