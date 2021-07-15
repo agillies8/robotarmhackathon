@@ -19,18 +19,20 @@ Moving axis:
    m    <-x axis->    .
 
 a : home
+g : actuate gripper
 
 CTRL-C to quit
 """
 
 moveBindings = {
-        'u':(0,0,0.005,False),
-        'o':(0,0,-0.005,False),
-        'j':(0,0.005,0,False),
-        'l':(0,-0.005,0,False),
-        'm':(0.005,0,0,False),
-        '.':(-0.005,0,0,False),
-        'a':(0,0,0,True)
+        'u':(0,0,0.005,False, None),
+        'o':(0,0,-0.005,False, None),
+        'j':(0,0.005,0,False, None),
+        'l':(0,-0.005,0,False, None),
+        'm':(0.005,0,0,False, None),
+        '.':(-0.005,0,0,False, None),
+        'a':(0,0,0,True, None),
+        'g':(0,0,0,False, True)
     }
 
 class PublishThread(threading.Thread):
@@ -38,9 +40,12 @@ class PublishThread(threading.Thread):
         super(PublishThread, self).__init__()
         self.publisher = rospy.Publisher('command_pose', PoseStamped, queue_size = 1)
         self.homepub = rospy.Publisher('home_axis', Bool, queue_size = 1)
+        self.gripperpub = rospy.Publisher('gripper', Bool, queue_size = 1)
         self.x_axis = 0.25
         self.y_axis = 0
         self.z_axis = 0.12
+        self.gripper = False
+        self.gripper_msg = Bool()
         self.home = False
         self.condition = threading.Condition()
         self.done = False
@@ -69,12 +74,13 @@ class PublishThread(threading.Thread):
         if rospy.is_shutdown():
             raise Exception("Got shutdown request before subscribers connected")
 
-    def update(self, x_axis, y_axis, z_axis, home):
+    def update(self, x_axis, y_axis, z_axis, home, gripper):
         self.condition.acquire()
         self.x_axis = x_axis
         self.y_axis = y_axis
         self.z_axis = z_axis
         self.home = home
+        self.gripper = gripper
         # Notify publish thread that we have a new message.
         self.condition.notify()
         self.condition.release()
@@ -99,18 +105,15 @@ class PublishThread(threading.Thread):
                 self.command.pose.position.x += 0.005
             elif self.x_axis == -0.005:
                 self.command.pose.position.x -= 0.005
-
             if self.y_axis == 0.005:
                 self.command.pose.position.y += 0.005
             elif self.y_axis == -0.005:
                 self.command.pose.position.y -= 0.005
-
             if self.z_axis == 0.005:
                 self.command.pose.position.z += 0.005
             elif self.z_axis == -0.005:
                 self.command.pose.position.z -= 0.005
-            print(f'x_axis: {self.command.pose.position.x}, y_axis: {self.command.pose.position.y}, z_axis: {self.command.pose.position.z}')
-
+            print(f'x_axis: {self.command.pose.position.x}, y_axis: {self.command.pose.position.y}, z_axis: {self.command.pose.position.z} /n/n')
 
             self.condition.release()
 
@@ -119,6 +122,12 @@ class PublishThread(threading.Thread):
                 msg = Bool()
                 msg.data = True
                 self.homepub.publish(msg)
+            elif self.gripper == True:
+                if self.gripper_msg.data == True:
+                    self.gripper_msg.data = False
+                else:
+                    self.gripper_msg.data = True
+                self.gripperpub.publish(self.gripper_msg)
             else:
                 self.publisher.publish(self.command)
 
@@ -150,11 +159,12 @@ if __name__=="__main__":
     y_axis = 0
     z_axis = 0.12
     home = 0
+    gripper = None
     status = 0
 
     try:
         #pub_thread.wait_for_subscribers()
-        pub_thread.update(x_axis, y_axis, z_axis, home)
+        pub_thread.update(x_axis, y_axis, z_axis, home, gripper)
 
         print(msg)
         while(1):
@@ -164,8 +174,9 @@ if __name__=="__main__":
                 y_axis = moveBindings[key][1]
                 z_axis = moveBindings[key][2]
                 home = moveBindings[key][3]
+                gripper = moveBindings[key][4]
 
-                print(x_axis, y_axis, z_axis, home)
+                print(x_axis, y_axis, z_axis, home, gripper)
                 if (status == 14):
                     print(msg)
                 status = (status + 1) % 15
@@ -178,11 +189,11 @@ if __name__=="__main__":
                 # y_axis = 0
                 # z_axis = 0
                 home = False
-                print (x_axis, y_axis, z_axis, home)
+                print (x_axis, y_axis, z_axis, home, gripper)
                 if (key == '\x03'):
                     break
  
-            pub_thread.update(x_axis, y_axis, z_axis, home)
+            pub_thread.update(x_axis, y_axis, z_axis, home, gripper)
 
     except Exception as e:
         print(e)

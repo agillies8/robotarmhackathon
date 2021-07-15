@@ -1,0 +1,42 @@
+<launch>
+
+    <rosparam command="load" file="$(find robotarmhackathon)/config/robotarmparams.yaml" />
+      <arg
+    name="model" />
+  <param
+    name="robot_description"
+    textfile="$(find robotarmhackathon)/urdf/arm_urdf.urdf" />
+
+  <!-- <node
+    name="joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui" /> -->
+
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+  <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find robotarmhackathon)/arm.rviz" />
+
+    <node pkg = "rosserial_python"  type = "serial_node.py" name="serial_node">
+    <param name="port" value="/dev/ttyUSB0"/>
+     </node>
+
+    <node pkg="robotarmhackathon" type="path_publisher.py" name="circular_publisher" output="screen">
+    </node>
+
+    <node pkg="robotarmhackathon" type="ik.py" name="ik_solver" output="screen">
+    </node>
+
+    <node pkg="robotarmhackathon" type="joint_states.py" name="joint_states" output="screen">
+    </node>
+
+    <node pkg="robotarmhackathon" type="motor_commander.py" name="motor_commander" output="screen">
+    </node>
+
+
+</launch>

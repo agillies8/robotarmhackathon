@@ -4,7 +4,7 @@
     <param name="port" value="/dev/ttyUSB0" />
      </node>
 
-    <node pkg="robotarmhackathon" type="absoluteCommander.py" name="Arm_commander" output="screen">
+    <node pkg="robotarmhackathon" type="jointCommander.py" name="Arm_commander" output="screen">
     </node>
 
 </launch>

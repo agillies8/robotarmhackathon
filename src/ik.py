@@ -60,7 +60,9 @@ class IK_Solver():
         x_input = msg.pose.position.x
         y_input = msg.pose.position.y
         z_input = msg.pose.position.z
-
+        if x_input == 0:
+            x_input = 0.0001
+        
         j1_output = math.atan(y_input/x_input)
 
         radial_distance = math.sqrt(x_input**2 + y_input**2)

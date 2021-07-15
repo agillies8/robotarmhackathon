@@ -8,6 +8,8 @@ import threading
 import rospy
 
 from geometry_msgs.msg import Pose
+from std_msgs.msg import Bool
+
 
 import sys, select, termios, tty
 
@@ -20,27 +22,32 @@ Moving axis:
    m    <-axis1->    .
 
 a : home
+g : gripper
 
 CTRL-C to quit
 """
 
 moveBindings = {
-        'u':(0,0,1,False),
-        'o':(0,0,-1,False),
-        'j':(0,1,0,False),
-        'l':(0,-1,0,False),
-        'm':(1,0,0,False),
-        '.':(-1,0,0,False),
-        'a':(0,0,0,True)
+        'u':(0,0,1,False, False),
+        'o':(0,0,-1,False, False),
+        'j':(0,1,0,False, False),
+        'l':(0,-1,0,False, False),
+        'm':(1,0,0,False, False),
+        '.':(-1,0,0,False, False),
+        'a':(0,0,0,True, False),
+        'g':(0,0,0,False, True)
     }
 
 class PublishThread(threading.Thread):
     def __init__(self, rate):
         super(PublishThread, self).__init__()
         self.publisher = rospy.Publisher('bump_axis', Pose, queue_size = 1)
+        self.gripperpub = rospy.Publisher('gripper', Bool, queue_size = 1)
         self.axis1 = 0
         self.axis2 = 0
         self.axis3 = 0
+        self.gripper = False
+        self.gripper_msg = Bool()
         self.home = False
         self.condition = threading.Condition()
         self.done = False
@@ -65,19 +72,20 @@ class PublishThread(threading.Thread):
         if rospy.is_shutdown():
             raise Exception("Got shutdown request before subscribers connected")
 
-    def update(self, axis1, axis2, axis3, home):
+    def update(self, axis1, axis2, axis3, home, gripper):
         self.condition.acquire()
         self.axis1 = axis1
         self.axis2 = axis2
         self.axis3 = axis3
         self.home = home
+        self.gripper = gripper
         # Notify publish thread that we have a new message.
         self.condition.notify()
         self.condition.release()
 
     def stop(self):
         self.done = True
-        self.update(0, 0, 0, False)
+        self.update(0, 0, 0, False, False)
         self.join()
 
     def run(self):
@@ -96,7 +104,14 @@ class PublishThread(threading.Thread):
             self.condition.release()
 
             # Publish.
-            self.publisher.publish(command)
+            if self.gripper == True:
+                if self.gripper_msg.data == True:
+                    self.gripper_msg.data = False
+                else:
+                    self.gripper_msg.data = True
+                self.gripperpub.publish(self.gripper_msg)
+            else:
+                self.publisher.publish(command)
 
         # Publish stop message when thread exits.
             command.position.x = self.axis1
@@ -133,11 +148,12 @@ if __name__=="__main__":
     axis2 = 0
     axis3 = 0
     home = 0
+    gripper = None
     status = 0
 
     try:
         #pub_thread.wait_for_subscribers()
-        pub_thread.update(axis1, axis2, axis3, home)
+        pub_thread.update(axis1, axis2, axis3, home, gripper)
 
         print(msg)
         while(1):
@@ -147,8 +163,9 @@ if __name__=="__main__":
                 axis2 = moveBindings[key][1]
                 axis3 = moveBindings[key][2]
                 home = moveBindings[key][3]
+                gripper = moveBindings[key][4]
 
-                print (axis1, axis2, axis3, home)
+                print (axis1, axis2, axis3, home, gripper)
                 if (status == 14):
                     print(msg)
                 status = (status + 1) % 15
@@ -161,11 +178,11 @@ if __name__=="__main__":
                 axis2 = 0
                 axis3 = 0
                 home = False
-                print (axis1, axis2, axis3, home)
+                print (axis1, axis2, axis3, home, gripper)
                 if (key == '\x03'):
                     break
  
-            pub_thread.update(axis1, axis2, axis3, home)
+            pub_thread.update(axis1, axis2, axis3, home, gripper)
 
     except Exception as e:
         print(e)

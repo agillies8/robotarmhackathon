@@ -17,6 +17,10 @@
 #define LIMIT_SWITCH_PIN1  3
 #define LIMIT_SWITCH_PIN2  14
 #define LIMIT_SWITCH_PIN3  18
+
+// Define step constant
+#define FULLSTEP 4
+
 ros::NodeHandle node_handle;
 geometry_msgs::Pose move_axis_relative;
 geometry_msgs::Pose joints;
@@ -34,6 +38,24 @@ bool stopFlag = false;
 AccelStepper axis1(1, stepPin1, dirPin1);
 AccelStepper axis2(1, stepPin2, dirPin2);
 AccelStepper axis3(1, stepPin3, dirPin3);
+AccelStepper gripper(FULLSTEP, 11, 5, 6, 4);
+
+void gripper_callback(const std_msgs::Bool& gripper_msg) {
+
+  if (gripper_msg.data == true){
+    gripper.moveTo(300);
+  }
+  else 
+  {
+    gripper.moveTo(-300);
+  }
+
+  while (gripper.distanceToGo() != 0){
+    gripper.run();
+    node_handle.spinOnce();
+  }
+}
+
 
 void home_axis_callback(const std_msgs::Bool& home_axis) {
 
@@ -66,6 +88,7 @@ void move_axis_callback(const geometry_msgs::Pose& move_axis) {
 
 ros::Subscriber<geometry_msgs::Pose> arduino_sub1("move_axis_absolute", &move_axis_callback);
 ros::Subscriber<std_msgs::Bool> arduino_sub2("home_axis", &home_axis_callback);
+ros::Subscriber<std_msgs::Bool> gripper_sub("gripper", &gripper_callback);
 
 void setup() {
 
@@ -82,6 +105,7 @@ digitalWrite(EnaPin3, 0);
   node_handle.advertise(arduino_joint_publisher);
   node_handle.subscribe(arduino_sub1);
   node_handle.subscribe(arduino_sub2);
+  node_handle.subscribe(gripper_sub);
 
   pinMode(LIMIT_SWITCH_PIN1, INPUT_PULLUP);
   pinMode(LIMIT_SWITCH_PIN2, INPUT_PULLUP);
@@ -96,6 +120,10 @@ digitalWrite(EnaPin3, 0);
 
   axis3.setMaxSpeed(500.0);
   axis3.setAcceleration(1000.0);
+
+  gripper.setMaxSpeed(650.0);
+  gripper.setAcceleration(150.0);
+//  gripper.setSpeed(500);
 
 }
 void loop() {
