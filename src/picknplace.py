@@ -35,19 +35,19 @@ class PathPub():
         pose_command = PoseStamped()  
         pose_command.header.frame_id='world'
         approach_a = [[0.2,0,0.2],
-                [0.2,0.1,0.2],
-                [0.2,0.1,0]]
+                [0.2,0.08,0.2],
+                [0.2,0.08,0]]
 
         approach_b = [[0.2,0.1,0.2],
-                [0.2,-0.1,0.2],
-                [0.2,-0.1,0]]
+                [0.2,-0.08,0.2],
+                [0.2,-0.08,0]]
 
-        approach_home = [[0.2,-0.1,0.2],
+        approach_home = [[0.2,-0.08,0.2],
                         [0.2,0.0,0.2]]
 
         rate=rospy.Rate(0.3) #rate of it will be published in Hz   
 
-        self.gripper_msg.data = False
+        self.gripper_msg.data = True
         self.gripperpub.publish(self.gripper_msg)
         rate.sleep()
 
@@ -60,7 +60,7 @@ class PathPub():
             self.pub.publish(pose_command) 
             rate.sleep()
 
-        self.gripper_msg.data = True
+        self.gripper_msg.data = False
         self.gripperpub.publish(self.gripper_msg)
         rate.sleep()
 
@@ -73,7 +73,7 @@ class PathPub():
             self.pub.publish(pose_command) 
             rate.sleep()
 
-        self.gripper_msg.data = False
+        self.gripper_msg.data = True
         self.gripperpub.publish(self.gripper_msg)
         rate.sleep()
 
