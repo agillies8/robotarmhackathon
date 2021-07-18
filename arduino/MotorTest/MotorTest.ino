@@ -21,6 +21,9 @@ SpeedyStepper axis1;
 SpeedyStepper axis2;
 SpeedyStepper axis3;
 
+float axis_1_move_dist = 0.1;
+float axis_2_move_dist = 0.1;
+float axis_3_move_dist = 0.1;
 
 //AccelStepper axis1(1, stepPin1, dirPin1);
 //AccelStepper axis2(1, stepPin2, dirPin2);
@@ -71,9 +74,9 @@ digitalWrite(EnaPin3, 0);
 }
 void loop() {
 
-  axis1.setupRelativeMoveInRevolutions(0.1);
-  axis2.setupRelativeMoveInRevolutions(0.1);
-  axis3.setupRelativeMoveInRevolutions(0.1);
+  axis1.setupRelativeMoveInRevolutions(axis_1_move_dist);
+  axis2.setupRelativeMoveInRevolutions(axis_2_move_dist);
+  axis3.setupRelativeMoveInRevolutions(axis_3_move_dist);
 
   while((!axis1.motionComplete()) || (!axis2.motionComplete()) || (!axis2.motionComplete()))
     {
@@ -102,9 +105,9 @@ void loop() {
 
 
 
-  axis1.setupRelativeMoveInRevolutions(-0.1);
-  axis2.setupRelativeMoveInRevolutions(-0.1);
-  axis3.setupRelativeMoveInRevolutions(-0.1);
+  axis1.setupRelativeMoveInRevolutions(-1*axis_1_move_dist);
+  axis2.setupRelativeMoveInRevolutions(-1*axis_2_move_dist);
+  axis3.setupRelativeMoveInRevolutions(-1*axis_3_move_dist);
 
   while((!axis1.motionComplete()) || (!axis2.motionComplete()) || (!axis3.motionComplete()))
     {
